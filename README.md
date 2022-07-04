@@ -1,10 +1,18 @@
-# Object Detection in an Urban Environment
+# Object Detection in an Urban Environment - Project 1 Submission
+**Michael Santoro**
+
+## Project Overview
+*This section should contain a brief description of the project and what we are trying to achieve. Why is object detection such an important component of self-driving car systems?*
+
+This project is an introduction to the Waymo Open Dataset explained further in the 'Data' section below. This project also introduces concept of deep nueral networks for machine learning. It introduces the concept of training and optimizing models for optimal results.
 
 ## Data
 
 For this project, we will be using data from the [Waymo Open dataset](https://waymo.com/open/).
 
-[OPTIONAL] - The files can be downloaded directly from the website as tar files or from the [Google Cloud Bucket](https://console.cloud.google.com/storage/browser/waymo_open_dataset_v_1_2_0_individual_files/) as individual tf records. We have already provided the data required to finish this project in the workspace, so you don't need to download it separately.
+## Exploritory Data Analysis
+
+In the exploratory data analysis excecise the 10 images were displayed with bounding boxes to represent the labeled data. This exploration only represents data for each image. Next I thought it would be interesting to explore the distribution of labels across the dataset. This way I may be able to determine if there was any sparse labels. Exploring the label_map.pbtxt file I found that there are (3) types of labels in the dataset (veichles, pedestrians, and cyclists). So, my plan was to sample 100 images and create a plot for each of the categories. We can see from the plot that the vast majority of the data is veichles.
 
 ## Structure
 
