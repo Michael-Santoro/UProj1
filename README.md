@@ -14,6 +14,8 @@ For this project, we will be using data from the [Waymo Open dataset](https://wa
 
 In the exploratory data analysis excecise the 10 images were displayed with bounding boxes to represent the labeled data. This exploration only represents data for each image. Next I thought it would be interesting to explore the distribution of labels across the dataset. This way I may be able to determine if there was any sparse labels. Exploring the label_map.pbtxt file I found that there are (3) types of labels in the dataset (veichles, pedestrians, and cyclists). So, my plan was to sample 100 images and create a plot for each of the categories. We can see from the plot that the vast majority of the data is veichles.
 
+![image](https://user-images.githubusercontent.com/74157573/177387214-2fac1053-fd40-4b8e-9df2-4ff7dfe2b0cc.png)
+
 ## Structure
 
 ### Data
