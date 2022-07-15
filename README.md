@@ -1,24 +1,24 @@
-# Object Detection in an Urban Environment
+# Object Detection in an Urban Environment - Project 1 Submission
+**Michael Santoro**
 
-## Data
+## Project Overview
+*This section should contain a brief description of the project and what we are trying to achieve. Why is object detection such an important component of self-driving car systems?*
 
-For this project, we will be using data from the [Waymo Open dataset](https://waymo.com/open/).
-
-[OPTIONAL] - The files can be downloaded directly from the website as tar files or from the [Google Cloud Bucket](https://console.cloud.google.com/storage/browser/waymo_open_dataset_v_1_2_0_individual_files/) as individual tf records. We have already provided the data required to finish this project in the workspace, so you don't need to download it separately.
-
-## Structure
+This project is an introduction to the Waymo Open Dataset explained further in the 'Data' section below. This project also introduces concept of deep nueral networks for machine learning. It introduces the concept of training and optimizing models for optimal results.
 
 ### Data
 
-The data you will use for training, validation and testing is present in:
-```
-/home/workspace/data/waymo/ - symbolically linked to /data/waymo/ (which is a READ ONLY external disk drive)
-/home/workspace/data/train/ - empty to start
-/home/workspace/data/val/ - empty to start
-/home/workspace/data/test/ - empty to start
-```
-You will split this data into `train`, `val`, and `test` sets by executing the `create_splits.py` file.
+For this project, we will be using data from the [Waymo Open dataset](https://waymo.com/open/).
 
+### Exploritory Data Analysis
+
+In the exploratory data analysis excecise the 10 images were displayed with bounding boxes to represent the labeled data. This exploration only represents data for each image. Next I thought it would be interesting to explore the distribution of labels across the dataset. This way I may be able to determine if there was any sparse labels. Exploring the label_map.pbtxt file I found that there are (3) types of labels in the dataset (veichles, pedestrians, and cyclists). So, my plan was to sample 100 images and create a plot for each of the categories. We can see from the plot that the vast majority of the data is veichles.
+
+![image](https://user-images.githubusercontent.com/74157573/177387214-2fac1053-fd40-4b8e-9df2-4ff7dfe2b0cc.png)
+
+## Set Up
+*This section should contain a brief description of the steps to follow to run the code for this repository.*
+For each of the steps of the project I used bash script files to assist with long commands with lots of flags required. The bash scripts referenced below are all stored in the scripts folder. I trained my model in the Udacity provided VM. The expriments folder is outlined below. Due to the size constraints I have saved configuration files for each one my experiments in the folder.
 
 ### Experiments
 The experiments folder will be organized as follow:
@@ -31,66 +31,13 @@ experiments/
     - experiment0/ - create a new folder for each experiment you run
     - experiment1/ - create a new folder for each experiment you run
     - experiment2/ - create a new folder for each experiment you run
+    - label_map.pbtxt
     ...
-```
-This is where you will train your model and store the logs and weights of your experiments.
-
-
-## Prerequisites
-
-### Local Setup
-
-For local setup if you have your own Nvidia GPU, you can use the provided Dockerfile and requirements in the [build directory](./build).
-
-Follow [the README therein](./build/README.md) to create a docker container and install all prerequisites.
-
-### Download and process the data
-
-**Note:** ”If you are using the classroom workspace, we have already completed the steps in the section for you. You can find the downloaded and processed files within the `/home/workspace/data/preprocessed_data/` directory. Check this out then proceed to the **Exploratory Data Analysis** part.
-
-The first goal of this project is to download the data from the Waymo's Google Cloud bucket to your local machine. For this project, we only need a subset of the data provided (for example, we do not need to use the Lidar data). Therefore, we are going to download and trim immediately each file. In `download_process.py`, you can view the `create_tf_example` function, which will perform this processing. This function takes the components of a Waymo Tf record and saves them in the Tf Object Detection api format. An example of such function is described [here](https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/training.html#create-tensorflow-records). We are already providing the `label_map.pbtxt` file.
-
-You can run the script using the following command:
-```
-python download_process.py --data_dir {processed_file_location} --size {number of files you want to download}
-```
-
-You are downloading 100 files (unless you changed the `size` parameter) so be patient! Once the script is done, you can look inside your `data_dir` folder to see if the files have been downloaded and processed correctly.
-
-### Classroom Workspace
-
-In the classroom workspace, every library and package should already be installed in your environment. You will NOT need to make use of `gcloud` to download the images.
-
-## Instructions
-
-### Exploratory Data Analysis
-
-You should use the data already present in `/home/workspace/data/waymo` directory to explore the dataset! This is the most important task of any machine learning project. To do so, open the `Exploratory Data Analysis` notebook. In this notebook, your first task will be to implement a `display_instances` function to display images and annotations using `matplotlib`. This should be very similar to the function you created during the course. Once you are done, feel free to spend more time exploring the data and report your findings. Report anything relevant about the dataset in the writeup.
-
-Keep in mind that you should refer to this analysis to create the different spits (training, testing and validation).
-
-
-### Create the training - validation splits
-In the class, we talked about cross-validation and the importance of creating meaningful training and validation splits. For this project, you will have to create your own training and validation sets using the files located in `/home/workspace/data/waymo`. The `split` function in the `create_splits.py` file does the following:
-* create three subfolders: `/home/workspace/data/train/`, `/home/workspace/data/val/`, and `/home/workspace/data/test/`
-* split the tf records files between these three folders by symbolically linking the files from `/home/workspace/data/waymo/` to `/home/workspace/data/train/`, `/home/workspace/data/val/`, and `/home/workspace/data/test/`
-
-Use the following command to run the script once your function is implemented:
-```
-python create_splits.py --data-dir /home/workspace/data
 ```
 
 ### Edit the config file
 
-Now you are ready for training. As we explain during the course, the Tf Object Detection API relies on **config files**. The config that we will use for this project is `pipeline.config`, which is the config for a SSD Resnet 50 640x640 model. You can learn more about the Single Shot Detector [here](https://arxiv.org/pdf/1512.02325.pdf).
-
-First, let's download the [pretrained model](http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz) and move it to `/home/workspace/experiments/pretrained_model/`.
-
-We need to edit the config files to change the location of the training and validation files, as well as the location of the label_map file, pretrained weights. We also need to adjust the batch size. To do so, run the following:
-```
-python edit_config.py --train_dir /home/workspace/data/train/ --eval_dir /home/workspace/data/val/ --batch_size 2 --checkpoint /home/workspace/experiments/pretrained_model/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map /home/workspace/experiments/label_map.pbtxt
-```
-A new config file has been created, `pipeline_new.config`.
+The config file was edited using the python file 'edit_config.py' this required multiple flags so I used the 'edit_config.sh' bash command file.
 
 ### Training
 
@@ -129,7 +76,7 @@ Modify the arguments of the following function to adjust it to your models:
 python experiments/exporter_main_v2.py --input_type image_tensor --pipeline_config_path experiments/reference/pipeline_new.config --trained_checkpoint_dir experiments/reference/ --output_directory experiments/reference/exported/
 ```
 
-This should create a new folder `experiments/reference/saved_model`. You can read more about the Tensorflow SavedModel format [here](https://www.tensorflow.org/guide/saved_model).
+This should create a new folder `experiments/reference/exported/saved_model`. You can read more about the Tensorflow SavedModel format [here](https://www.tensorflow.org/guide/saved_model).
 
 Finally, you can create a video of your model's inferences for any tf record file. To do so, run the following command (modify it to your files):
 ```
