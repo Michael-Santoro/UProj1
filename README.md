@@ -21,16 +21,14 @@ In the exploratory data analysis excecise the 10 images were displayed with boun
 For each of the steps of the project I used bash script files to assist with long commands with lots of flags required. The bash scripts referenced below are all stored in the scripts folder. I trained my model in the Udacity provided VM. The expriments folder is outlined below. Due to the size constraints I have saved configuration files for each one my experiments in the folder.
 
 ### Experiments
-The experiments folder will be organized as follow:
+The experiments folder will be organized as follows:
 ```
 experiments/
-    - pretrained_model/
     - exporter_main_v2.py - to create an inference model
     - model_main_tf2.py - to launch training
-    - reference/ - reference training with the unchanged config file
-    - experiment0/ - create a new folder for each experiment you run
-    - experiment1/ - create a new folder for each experiment you run
-    - experiment2/ - create a new folder for each experiment you run
+    - experiment0/ - containing pipeline_new.config for experiment
+    - experiment1/ - containing pipeline_new.config for experiment
+    - experiment2/ - containing pipeline_new.config for experiment
     - label_map.pbtxt
     ...
 ```
@@ -41,21 +39,7 @@ The config file was edited using the python file 'edit_config.py' this required 
 
 ### Training
 
-You will now launch your very first experiment with the Tensorflow object detection API. Move the `pipeline_new.config` to the `/home/workspace/experiments/reference` folder. Now launch the training process:
-* a training process:
-```
-python experiments/model_main_tf2.py --model_dir=experiments/reference/ --pipeline_config_path=experiments/reference/pipeline_new.config
-```
-Once the training is finished, launch the evaluation process:
-* an evaluation process:
-```
-python experiments/model_main_tf2.py --model_dir=experiments/reference/ --pipeline_config_path=experiments/reference/pipeline_new.config --checkpoint_dir=experiments/reference/
-```
-
-**Note**: Both processes will display some Tensorflow warnings, which can be ignored. You may have to kill the evaluation script manually using
-`CTRL+C`.
-
-To monitor the training, you can launch a tensorboard instance by running `python -m tensorboard.main --logdir experiments/reference/`. You will report your findings in the writeup.
+The training is initiated by a python file 'model_main_tf2.py' there are multiple flags associated with this script so I created a bash file entitled 'start_training.sh'.
 
 ### Improve the performances
 
