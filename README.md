@@ -77,3 +77,7 @@ The thought here was to increase the variability in the data to tray and get the
 Dimishing returns, as I continued to run experiments I found that my experiment 3 was preforming the best. Due to resources being limited in the enviroment I cleaned up the workspace and re-ran training with experiment 3 in hopes of saving the model and creating the gif video for evaluation.
 ## Evaluation
 
+![image](https://user-images.githubusercontent.com/74157573/179369982-4c7c2acb-d082-47af-8fb3-cb4e148ed85d.png)
+
+![image](https://user-images.githubusercontent.com/74157573/179370031-f710b174-1264-49f6-984c-322c1d7e229a.png)
+
