@@ -92,4 +92,7 @@ The things I want to change for experiment1 larger batch size, reduce the learni
 #### Improve on the reference
 This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
 
-After making the initial changes I wan
+After making the initial changes I want to work with the learning rate
+
+Experiment 1 to Experiment 2 -> Changed the learning rate to exponential decay
+Experiment 2 to Experiment 3 -> INcrease the batch size 100 to create more variance in data
