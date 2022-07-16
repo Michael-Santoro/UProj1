@@ -84,6 +84,8 @@ This section should detail the cross validation strategy and justify your approa
 ### Training
 #### Reference experiment
 This section should detail the results of the reference experiment. It should includes training metrics and a detailed explanation of the algorithm's performances.
+The initial experiment provided some interesting results. The localization loss is the most concerning
 
+The things I want to change for experiment1 larger batch size, reduce the learning rate when studying the loss graphs they are bouncing all over the place would like the learning rate to decrease not increase.
 #### Improve on the reference
 This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
