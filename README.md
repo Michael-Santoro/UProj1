@@ -72,5 +72,8 @@ This did not yield much results.
 ##### Experiment 2 to Experiment 3 -> Increase the batch size 8 to create more variance in data, adjust brightness, contrast, hue, color, saturation
 The thought here was to increase the variability in the data to tray and get the model to get unstuck. We seam to approach a loss plateau.
 
+![image](https://user-images.githubusercontent.com/74157573/179368766-a8955c06-df2a-419a-9bd8-1d5666151d53.png)
+
+
 ## Evaluation
 
