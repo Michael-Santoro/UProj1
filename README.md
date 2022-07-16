@@ -37,11 +37,10 @@ experiments/
 
 The config file was edited using the python file 'edit_config.py' this required multiple flags so I used the 'edit_config.sh' bash command file.
 
-### Training
+## Training
 
 The training is initiated by a python file 'model_main_tf2.py' there are multiple flags associated with this script so I created a bash file entitled 'start_training.sh'.
 
-### Training
 #### Reference experiment
 *This section should detail the results of the reference experiment. It should includes training metrics and a detailed explanation of the algorithm's performances.*
 The initial experiment provided some interesting results starting with the classification_loss and localization_loss graphs. Shown below:
@@ -72,3 +71,6 @@ This did not yield much results.
 
 ##### Experiment 2 to Experiment 3 -> Increase the batch size 8 to create more variance in data, adjust brightness, contrast, hue, color, saturation
 The thought here was to increase the variability in the data to tray and get the model to get unstuck. We seam to approach a loss plateau.
+
+## Evaluation
+
