@@ -54,13 +54,21 @@ The 'classification_loss' is a measure of the accuracy of the actual classificat
 The learning schedule of the pipeline in the initial experiment was set to .0133 then was scheduled to increase .04 we can see in the early stages of the loss plots this initial learning rate is stabalizing the performance (less bouncing around).
 
 
-
 #### Improve on the reference
 *This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.*
 
-##### Experiment 1 -> Expermient 2
+##### Experiment 0 -> Expermient 1: Reduced Learning Rate
 
-After making the initial changes I want to work with the learning rate
+![image](https://user-images.githubusercontent.com/74157573/179365645-2ae83b55-96e0-4f35-bdb5-be91d606f0e4.png)
 
-Experiment 1 to Experiment 2 -> Changed the learning rate to exponential decay
-Experiment 2 to Experiment 3 -> INcrease the batch size 8 to create more variance in data, adjust brightness, contrast,hue, color, saturation
+Reviewing the plot we can see a significant improvement in stability although the localization loss still could be improved.
+
+##### Experiment 1 to Experiment 2 -> Changed the learning rate to exponential decay
+The initial learning rate algorithim was a cosine_decay_learning_rate this particular method was causing the learning rate to increase initially which is what I think was causing some instability. So I changeed to 'exponential_decay_learning_rate'.
+
+![image](https://user-images.githubusercontent.com/74157573/179365986-74bcd6bd-63c1-4abb-bee1-7da1e46e5d44.png)
+
+This did not yield much results.
+
+##### Experiment 2 to Experiment 3 -> Increase the batch size 8 to create more variance in data, adjust brightness, contrast, hue, color, saturation
+The thought here was to increase the variability in the data to tray and get the model to get unstuck. We seam to approach a loss plateau.
