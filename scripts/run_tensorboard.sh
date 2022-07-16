@@ -1,1 +1,1 @@
-python -m tensorboard.main --logdir experiments/
+python -m tensorboard.main --logdir /home/workspace/experiments/
