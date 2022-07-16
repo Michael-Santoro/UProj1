@@ -74,6 +74,6 @@ The thought here was to increase the variability in the data to tray and get the
 
 ![image](https://user-images.githubusercontent.com/74157573/179368766-a8955c06-df2a-419a-9bd8-1d5666151d53.png)
 
-
+Dimishing returns, as I continued to run experiments I found that my experiment 3 was preforming the best. Due to resources being limited in the enviroment I cleaned up the workspace and re-ran training with experiment 3 in hopes of saving the model and creating the gif video for evaluation.
 ## Evaluation
 
