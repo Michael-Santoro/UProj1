@@ -2,9 +2,10 @@
 **Michael Santoro**
 
 ## Project Overview
-*This section should contain a brief description of the project and what we are trying to achieve. Why is object detection such an important component of self-driving car systems?*
 
-This project is an introduction to the Waymo Open Dataset explained further in the 'Data' section below. This project also introduces concept of deep nueral networks for machine learning. It introduces the concept of training and optimizing models for optimal results.
+This project is an introduction to Computer Vision. By demonstrating the ability to take an existing machine learning model architecture, then training the model while evaluating the training metrics to find optimal pipeline parameters, to get optimal model results. The Waymo Open Dataset explained further in the 'Data' section below will be used the input data. This project also introduces concept of deep nueral networks for machine learning. It introduces the concept of training and optimizing models for optimal results.
+
+Object Detection is important to self-driving cars due to the need for cars to understand their enviroment. So detecting objects in images such as cyclists, cars, and people. Information such as location of these objects can be extracted of these images. This information could be passed to the controls of the car to avoid a collision. Thus Object Detection is necessary for Self-Driving cars.
 
 ### Data
 
@@ -17,7 +18,6 @@ In the exploratory data analysis excecise the 10 images were displayed with boun
 ![image](https://user-images.githubusercontent.com/74157573/177387214-2fac1053-fd40-4b8e-9df2-4ff7dfe2b0cc.png)
 
 ## Set Up
-*This section should contain a brief description of the steps to follow to run the code for this repository.*
 For each of the steps of the project I used bash script files to assist with long commands with lots of flags required. The bash scripts referenced below are all stored in the scripts folder. I trained my model in the Udacity provided VM. The expriments folder is outlined below. Due to the size constraints I have saved configuration files for each one my experiments in the folder.
 
 ### Experiments
@@ -26,9 +26,9 @@ The experiments folder will be organized as follows:
 experiments/
     - exporter_main_v2.py - to create an inference model
     - model_main_tf2.py - to launch training
-    - experiment0/ - containing pipeline_new.config for experiment
-    - experiment1/ - containing pipeline_new.config for experiment
-    - experiment2/ - containing pipeline_new.config for experiment
+    - experiment0/ - containing pipeline_new.config for experiment, traing_run bash script, and launch evalueation bash script
+    - experiment1/ - containing pipeline_new.config for experiment, traing_run bash script, and launch evalueation bash script
+    - experiment2/ - containing pipeline_new.config for experiment, traing_run bash script, and launch evalueation bash script
     - label_map.pbtxt
     ...
 ```
@@ -41,58 +41,26 @@ The config file was edited using the python file 'edit_config.py' this required 
 
 The training is initiated by a python file 'model_main_tf2.py' there are multiple flags associated with this script so I created a bash file entitled 'start_training.sh'.
 
-### Improve the performances
-
-Most likely, this initial experiment did not yield optimal results. However, you can make multiple changes to the config file to improve this model. One obvious change consists in improving the data augmentation strategy. The [`preprocessor.proto`](https://github.com/tensorflow/models/blob/master/research/object_detection/protos/preprocessor.proto) file contains the different data augmentation method available in the Tf Object Detection API. To help you visualize these augmentations, we are providing a notebook: `Explore augmentations.ipynb`. Using this notebook, try different data augmentation combinations and select the one you think is optimal for our dataset. Justify your choices in the writeup.
-
-Keep in mind that the following are also available:
-* experiment with the optimizer: type of optimizer, learning rate, scheduler etc
-* experiment with the architecture. The Tf Object Detection API [model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md) offers many architectures. Keep in mind that the `pipeline.config` file is unique for each architecture and you will have to edit it.
-
-**Important:** If you are working on the workspace, your storage is limited. You may to delete the checkpoints files after each experiment. You should however keep the `tf.events` files located in the `train` and `eval` folder of your experiments. You can also keep the `saved_model` folder to create your videos.
-
-
-### Creating an animation
-#### Export the trained model
-Modify the arguments of the following function to adjust it to your models:
-
-```
-python experiments/exporter_main_v2.py --input_type image_tensor --pipeline_config_path experiments/reference/pipeline_new.config --trained_checkpoint_dir experiments/reference/ --output_directory experiments/reference/exported/
-```
-
-This should create a new folder `experiments/reference/exported/saved_model`. You can read more about the Tensorflow SavedModel format [here](https://www.tensorflow.org/guide/saved_model).
-
-Finally, you can create a video of your model's inferences for any tf record file. To do so, run the following command (modify it to your files):
-```
-python inference_video.py --labelmap_path label_map.pbtxt --model_path experiments/reference/exported/saved_model --tf_record_path /data/waymo/testing/segment-12200383401366682847_2552_140_2572_140_with_camera_labels.tfrecord --config_path experiments/reference/pipeline_new.config --output_path animation.gif
-```
-
-## Submission Template
-
-### Project overview
-This section should contain a brief description of the project and what we are trying to achieve. Why is object detection such an important component of self driving car systems?
-
-### Set up
-This section should contain a brief description of the steps to follow to run the code for this repository.
-
-### Dataset
-#### Dataset analysis
-This section should contain a quantitative and qualitative description of the dataset. It should include images, charts and other visualizations.
-#### Cross validation
-This section should detail the cross validation strategy and justify your approach.
-
 ### Training
 #### Reference experiment
-This section should detail the results of the reference experiment. It should includes training metrics and a detailed explanation of the algorithm's performances.
-The initial experiment provided some interesting results. The localization loss is the most concerning
+*This section should detail the results of the reference experiment. It should includes training metrics and a detailed explanation of the algorithm's performances.*
+The initial experiment provided some interesting results starting with the classification_loss and localization_loss graphs. Shown below:
+![image](https://user-images.githubusercontent.com/74157573/179364402-05518990-21cb-40be-8162-f4a6104cafe5.png)
+
+The 'classification_loss' is a measure of the accuracy of the actual classification meaning did the model find the correct label for the bounding box, we are looking for values close zero. The 'localization_loss' is a measure of bounding box location accuracy. These initial results for both of these measures indicate that the learning rate is too high this can be seen by the instability of these plots. Further reviewing this initial experiment we can view the learning rate.
+
+![image](https://user-images.githubusercontent.com/74157573/179365333-d7c7ffdd-f517-48f1-baff-163c6ae455dc.png)
 
 The learning schedule of the pipeline in the initial experiment was set to .0133 then was scheduled to increase .04 we can see in the early stages of the loss plots this initial learning rate is stabalizing the performance (less bouncing around).
 
-The things I want to change for experiment1 larger batch size, reduce the learning rate when studying the loss graphs they are bouncing all over the place would like the learning rate to decrease not increase.
+
+
 #### Improve on the reference
-This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
+*This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.*
+
+##### Experiment 1 -> Expermient 2
 
 After making the initial changes I want to work with the learning rate
 
 Experiment 1 to Experiment 2 -> Changed the learning rate to exponential decay
-Experiment 2 to Experiment 3 -> INcrease the batch size 100 to create more variance in data
+Experiment 2 to Experiment 3 -> INcrease the batch size 8 to create more variance in data, adjust brightness, contrast,hue, color, saturation
